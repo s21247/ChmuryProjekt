@@ -4,8 +4,6 @@ import {
     NavLink,
     Bars,
     NavMenu,
-    NavBtn,
-    NavBtnLink,
     Logo
 } from './NavbarElements';
 
@@ -13,14 +11,14 @@ const Navbar = () => {
     return (
         <>
             <Nav>
-                <Logo to='/'>Restauracja</Logo>
+                <Logo to='/'>Restaurant</Logo>
                 <Bars />
                 <NavMenu>
-                    <NavLink to='/movies' activeStyle>
-                        Movies
+                    <NavLink to='/menu' activeStyle>
+                        Menu
                     </NavLink>
-                    <NavLink to='/extras' activeStyle>
-                        Extras
+                    <NavLink to='/cart' activeStyle>
+                        Your Cart
                     </NavLink>
                     <NavLink to='/about-us' activeStyle>
                         About Us

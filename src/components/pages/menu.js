@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Movies = () => {
+const Menu = () => {
     return (
         <>
-            <h1>Movies</h1>
+            <h1>Menu</h1>
         </>
     );
 
 }
 
-export default Movies;
+export default Menu;
