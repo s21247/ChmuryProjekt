@@ -1,19 +1,18 @@
 import React from 'react';
 import UploadForm from '../components2/UploadForm'
 import ImageGrid from "../ImageGrid";
-import Menu from "../Menu/Menu";
+import MenuPage from "../Menu/MenuPage";
 
 
-const Movies = () => {
+const Menu = () => {
     return (
         <>
-            <h1>Movies</h1>
+            <h1>Menu</h1>
             <UploadForm/>
             <ImageGrid/>
-            <Menu/>
+            <MenuPage/>
         </>
     );
-
 }
 
-export default Movies;
+export default Menu;

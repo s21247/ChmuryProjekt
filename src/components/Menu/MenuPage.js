@@ -1,7 +1,7 @@
 import React from "react";
 import Template from "./Template"
 
-function Menu() {
+function MenuPage() {
 
     return (
         <React.Fragment>
@@ -13,4 +13,4 @@ function Menu() {
 
 }
 
-export default Menu;
+export default MenuPage;
