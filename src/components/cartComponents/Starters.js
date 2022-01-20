@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import useFirestore from "../components2/hooks/useFirestore";
+import useFirestore from "../hooks/useFirestore";
 
 const Starters = (data) => {
     const [starters, setStarters] = useState([]);

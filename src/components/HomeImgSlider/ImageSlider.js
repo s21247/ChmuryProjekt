@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
-import useFirestore from "../components2/hooks/useFirestore";
+import useFirestore from "../hooks/useFirestore";
 
 const ImageSlider = () => {
     const [current, setCurrent] = useState(0);
