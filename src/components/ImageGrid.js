@@ -1,5 +1,5 @@
 import React from "react";
-import useFirestore from "./components2/hooks/useFirestore";
+import useFirestore from "./hooks/useFirestore";
 
 
 const ImageGrid = () => {

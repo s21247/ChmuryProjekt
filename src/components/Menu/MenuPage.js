@@ -4,6 +4,7 @@ import Template from "./Template"
 function MenuPage() {
 
     return (
+
         <React.Fragment>
         <Template collection={'Przystawki'} title={'Przystawki'}/>,
         <Template collection={'Obiady'} title={'Obiady'}/>,

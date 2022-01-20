@@ -1,17 +1,17 @@
-import useFirestore from "../components2/hooks/useFirestore";
+import useFirestore from "../hooks/useFirestore";
 
 function Template({collection,title}){
     const {docs} = useFirestore(collection)
     return (
         <div>
-            <h1>{title}</h1>
+            <h2>{title}</h2>
             {
                 docs && docs.map((doc,i) => {
                     return <div key={doc.id}>
-                        <h2>{i+1}.{doc.title}</h2>
+                        <h3>{i+1}.{doc.title}</h3>
                         {doc.description}
                         {doc.price}
-                        <button>Podejrzyj danie</button>
+                        <button>Dodaj do koszyka</button>
                     </div>
                 })
             }
