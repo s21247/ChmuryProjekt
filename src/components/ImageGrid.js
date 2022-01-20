@@ -6,7 +6,7 @@ const ImageGrid = () => {
     const {docs} = useFirestore('images')
     console.log(docs);
     return (
-        <div>
+        <div className="sliderMenuImageGrid">
             {
                 docs && docs.map(doc => {
                     return <div key={doc.id}>

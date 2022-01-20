@@ -10,8 +10,9 @@ function Template({collection,title}){
                     return <div key={doc.id}>
                         <h3>{i+1}.{doc.title}</h3>
                         {doc.description}
-                        {doc.price}
-                        <button>Dodaj do koszyka</button>
+                        <p className="price">{doc.price} zł</p>
+                        <button className="button">Dodaj do koszyka</button>
+
                     </div>
                 })
             }

@@ -1,0 +1,53 @@
+.html {
+    box-sizing: border-box;
+}
+
+.column {
+    box-sizing: inherit;
+    float: left;
+    margin-left: 10%;
+    width: 75%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+}
+
+.title{
+    text-align: center;
+}
+
+.about-section {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 25px;
+    text-align: center;
+    background-color: #615A75;
+    color: white;
+}
+
+.container {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0 16px;
+    color: white;
+}
+
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.button:hover {
+    background-color: rgb(81, 41, 155);
+}
+
+@media screen and (max-width: 650px) {
+    .column {
+        width: 100%;
+        display: block;
+    }
+}
