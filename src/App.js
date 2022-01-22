@@ -7,6 +7,8 @@ import AboutUs from "./components/pages/aboutUs";
 import Navbar from "./components/Navbar";
 
 function App() {
+    if(!localStorage.getItem('cart'))
+    localStorage.setItem('cart',JSON.stringify([]))
   return (
       <Router>
           <Navbar />
