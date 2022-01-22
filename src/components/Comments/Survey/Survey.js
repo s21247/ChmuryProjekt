@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {projectFirestore, projectStorage} from "../../../firebase-config/firebase-config";
-import api from "../../hooks/api";
-import Api from "../../hooks/api";
-import {useForm} from "react-hook-form";
 
 const Survey = () => {
     const [fileUrl,setFileUrl] = useState(null)
@@ -18,7 +15,7 @@ const Survey = () => {
         await fileRef.put(file)
 
         setFileUrl(await fileRef.getDownloadURL())
-        }
+    }
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -27,7 +24,6 @@ const Survey = () => {
         const myHeaders = new Headers();
         // myHeaders.append("Content-Type", "multipart/form-data");
         myHeaders.append("Authorization", "Bearer d5aefce36abff1703a9defd8eef170830d348a62");
-
 
         const requestOptions = {
             method: 'POST',
@@ -40,11 +36,17 @@ const Survey = () => {
             .then(response => response.json())
             .then(result => obj = result)
             .catch(error => console.log('error', error));
-        console.log(obj);
-
 
         const username = e.target.username.value;
         const comment = e.target.comment.value;
+
+        // eslint-disable-next-line array-callback-return
+        obj.food_types.map(i => {
+            if (i.name === 'non food' && i.probs < 0.3){
+                setFileUrl(null);
+            }
+        })
+
         await projectFirestore.collection("coms").doc(username).set({
             name:username,
             comment:comment,
@@ -73,6 +75,11 @@ const Survey = () => {
        <ul>
            {
                data.map(data => {
+                   if (data.file === null)
+                       return <li key={data.name}>
+                           <h2>{data.name}</h2>
+                           <p>{data.comment}</p>
+                       </li>
                    return <li key={data.name}>
                        <h2>{data.name}</h2>
                        <p>{data.comment}</p>
