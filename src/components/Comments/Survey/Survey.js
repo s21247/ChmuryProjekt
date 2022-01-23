@@ -2,57 +2,64 @@ import React, {useEffect, useState} from "react";
 import {projectFirestore, projectStorage} from "../../../firebase-config/firebase-config";
 
 const Survey = () => {
-    const [fileUrl,setFileUrl] = useState(null)
-    const [image,setImage] = useState(null)
+    const [fileUrl,setFileUrl] = useState(null);
     const [data,setData] = useState([]);
-    const [result,setResult] = useState({});
+    const [isFileCheck, setIsFileCheck] = useState(false);
 
     const onChange = async (e) => {
-        setImage(e.target.files[0]);
         const file = e.target.files[0];
         const storageRef = projectStorage.ref()
         const fileRef = storageRef.child(file.name)
         await fileRef.put(file)
+        let isFood = false;
+        alert("We are processing your picture, please wait.")
 
-        setFileUrl(await fileRef.getDownloadURL())
+        await fetch("https://us-central1-model-aria-333216.cloudfunctions.net/checkImageLabels", {
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+            },
+            "body": `{\"fileName\":\"${file.name}\"}`
+        })
+            .then(response => response.json())
+            .then(result => {
+                result.forEach(item => {
+                    if (item.description === "Food" && item.score > 0.75)
+                        isFood = true;
+                })
+            })
+            .catch(err => {
+                console.error(err);
+            });
+        if (isFood){
+            setFileUrl(await fileRef.getDownloadURL())
+        } else {
+            await storageRef.child(file.name).delete();
+        }
+        setIsFileCheck(true)
+        if (isFood){
+            alert("You can submit you comment")
+        } else
+            alert("Your picture is not related with food")
+
     }
 
+
     const onSubmit = async (e) => {
-        e.preventDefault()
-        const formData = new FormData();
-        formData.append("image", image);
-        const myHeaders = new Headers();
-        // myHeaders.append("Content-Type", "multipart/form-data");
-        myHeaders.append("Authorization", "Bearer d5aefce36abff1703a9defd8eef170830d348a62");
+        if (isFileCheck){
+            e.preventDefault()
 
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: formData,
-            redirect: 'follow'
-        };
-        let obj;
-        await fetch("https://api.logmeal.es/v2/image/recognition/type/v0.9", requestOptions)
-            .then(response => response.json())
-            .then(result => obj = result)
-            .catch(error => console.log('error', error));
+            const username = e.target.username.value;
+            const comment = e.target.comment.value;
 
-        const username = e.target.username.value;
-        const comment = e.target.comment.value;
-
-        // eslint-disable-next-line array-callback-return
-        obj.food_types.map(i => {
-            if (i.name === 'non food' && i.probs < 0.3){
-                setFileUrl(null);
-            }
-        })
-
-        await projectFirestore.collection("coms").doc(username).set({
-            name:username,
-            comment:comment,
-            file:fileUrl
-            }
-        )
+            await projectFirestore.collection("coms").doc(username).set({
+                    name:username,
+                    comment:comment,
+                    file:fileUrl
+                }
+            )
+            window.location.reload();
+        }
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -67,10 +74,10 @@ const Survey = () => {
     return (
         <>
             <form onSubmit={onSubmit}>
-                <input type="text" name="username" placeholder={"give name"}/>
-                <input type="text" name="comment" placeholder={"Write comment"}/>
+                <input type="text" name="username" placeholder={"give name"} required={true}/>
+                <input type="text" name="comment" placeholder={"Write comment"} required={true}/>
                 <input type="file" onChange={onChange}/>
-                <button>Submit</button>
+                <button disabled={!isFileCheck}>Submit</button>
             </form>
        <ul>
            {
