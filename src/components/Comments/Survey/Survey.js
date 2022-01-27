@@ -1,15 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import {auth, projectFirestore, projectStorage} from "../../../firebase-config/firebase-config";
 import ReCAPTCHA from "react-google-recaptcha";
-import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
-import {onAuthStateChanged, getAuth, signInAnonymously} from "@firebase/auth";
+import {onAuthStateChanged, signInAnonymously} from "@firebase/auth";
 
 const Survey = () => {
     const [fileUrl, setFileUrl] = useState(null);
     const [data, setData] = useState([]);
     const [isFileCheck, setIsFileCheck] = useState(false);
-    const [token,setToken] = useState(null);
+    const [token, setToken] = useState(null);
     const reRef = useRef(null)
 
     const onChange = async (e) => {
@@ -55,7 +54,6 @@ const Survey = () => {
     const onSubmit = async (e) => {
         //console.log(token);
 
-        let id = uuidv4();
         signInAnonymously(auth)
             .then(() => {
                 // Signed in..
@@ -63,40 +61,39 @@ const Survey = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorCode,errorMessage)
+                console.log(errorCode, errorMessage)
             });
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                user.uid = id;
-                console.log("wykonuje")
+                const id = user.uid;
                 console.log(`USER UID: ${user.uid}`)
+                console.log(`USER ID: ${id}`)
                 console.log(user)
-            } else {
-                // User is signed out
-                // ...
+
+
+                axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`)
+                    .then(console.log)
+
+
+                if (isFileCheck) {
+                    e.preventDefault()
+
+
+                    const username = e.target.username.value;
+                    const comment = e.target.comment.value;
+
+                    await projectFirestore.collection("coms").doc(id).set({
+                            id: id,
+                            name: username,
+                            comment: comment,
+                            file: fileUrl
+                        }
+                    )
+                }
             }
         });
-        axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`)
-            .then(console.log)
 
 
-        if (isFileCheck) {
-            e.preventDefault()
-
-
-            const username = e.target.username.value;
-            const comment = e.target.comment.value;
-            console.log("MOJE ID " + id)
-
-
-            await projectFirestore.collection("coms").doc(id).set({
-                    id: id,
-                    name: username,
-                    comment: comment,
-                    file: fileUrl
-                }
-            )
-        }
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -116,21 +113,21 @@ const Survey = () => {
                 <input type="file" onChange={onChange}/>
                 <button disabled={!isFileCheck}>Submit</button>
 
-            <ReCAPTCHA
-                sitekey={"6LfslDEeAAAAAPg-iDR9eCZJnyrDG43_EvFgaKXu"}
-                ref={reRef}
-                size={"invisible"}
-            />
+                <ReCAPTCHA
+                    sitekey={"6LfslDEeAAAAAPg-iDR9eCZJnyrDG43_EvFgaKXu"}
+                    ref={reRef}
+                    size={"invisible"}
+                />
             </form>
             <ul>
                 {
                     data.map(data => {
                         if (data.file === null)
-                            return <li key={data.name}>
+                            return <li key={data.id}>
                                 <h2>{data.name}</h2>
                                 <p>{data.comment}</p>
                             </li>
-                        return <li key={data.name}>
+                        return <li key={data.id}>
                             <h2>{data.name}</h2>
                             <p>{data.comment}</p>
                             <img src={data.file} alt={"picture"}/>
