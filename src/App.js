@@ -5,11 +5,12 @@ import Menu from './components/pages/menu';
 import Cart from './components/pages/cart';
 import AboutUs from "./components/pages/aboutUs";
 import Navbar from "./components/Navbar";
-
+import ReCAPTCHA from "react-google-recaptcha";
 function App() {
     if(!localStorage.getItem('cart'))
     localStorage.setItem('cart',JSON.stringify([]))
   return (
+      <>
       <Router>
           <Navbar />
           <Routes>
@@ -19,6 +20,8 @@ function App() {
               <Route path='/about-us' element={<AboutUs/>} />
           </Routes>
       </Router>
+
+      </>
   );
 }
 

@@ -1,10 +1,16 @@
-import React, {useEffect, useState} from "react";
-import {projectFirestore, projectStorage} from "../../../firebase-config/firebase-config";
+import React, {useEffect, useRef, useState} from "react";
+import {auth, projectFirestore, projectStorage} from "../../../firebase-config/firebase-config";
+import ReCAPTCHA from "react-google-recaptcha";
+import { v4 as uuidv4 } from 'uuid';
+import axios from "axios";
+import {onAuthStateChanged, getAuth, signInAnonymously} from "@firebase/auth";
 
 const Survey = () => {
-    const [fileUrl,setFileUrl] = useState(null);
-    const [data,setData] = useState([]);
+    const [fileUrl, setFileUrl] = useState(null);
+    const [data, setData] = useState([]);
     const [isFileCheck, setIsFileCheck] = useState(false);
+    const [token,setToken] = useState(null);
+    const reRef = useRef(null)
 
     const onChange = async (e) => {
         const file = e.target.files[0];
@@ -31,34 +37,65 @@ const Survey = () => {
             .catch(err => {
                 console.error(err);
             });
-        if (isFood){
+        if (isFood) {
             setFileUrl(await fileRef.getDownloadURL())
         } else {
             await storageRef.child(file.name).delete();
         }
+        const value = await reRef.current.executeAsync();
+        setToken(value)
         setIsFileCheck(true)
-        if (isFood){
+        if (isFood) {
             alert("You can submit you comment")
         } else
             alert("Your picture is not related with food")
 
     }
 
-
     const onSubmit = async (e) => {
-        if (isFileCheck){
+        //console.log(token);
+
+        let id = uuidv4();
+        signInAnonymously(auth)
+            .then(() => {
+                // Signed in..
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode,errorMessage)
+            });
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                user.uid = id;
+                console.log("wykonuje")
+                console.log(`USER UID: ${user.uid}`)
+                console.log(user)
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+        axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`)
+            .then(console.log)
+
+
+        if (isFileCheck) {
             e.preventDefault()
+
 
             const username = e.target.username.value;
             const comment = e.target.comment.value;
+            console.log("MOJE ID " + id)
 
-            await projectFirestore.collection("coms").doc(username).set({
-                    name:username,
-                    comment:comment,
-                    file:fileUrl
+
+            await projectFirestore.collection("coms").doc(id).set({
+                    id: id,
+                    name: username,
+                    comment: comment,
+                    file: fileUrl
                 }
             )
-            window.location.reload();
         }
     }
     useEffect(() => {
@@ -70,7 +107,7 @@ const Survey = () => {
             }))
         }
         fetchData()
-    },[])
+    }, [])
     return (
         <>
             <form onSubmit={onSubmit}>
@@ -78,26 +115,32 @@ const Survey = () => {
                 <input type="text" name="comment" placeholder={"Write comment"} required={true}/>
                 <input type="file" onChange={onChange}/>
                 <button disabled={!isFileCheck}>Submit</button>
+
+            <ReCAPTCHA
+                sitekey={"6LfslDEeAAAAAPg-iDR9eCZJnyrDG43_EvFgaKXu"}
+                ref={reRef}
+                size={"invisible"}
+            />
             </form>
-       <ul>
-           {
-               data.map(data => {
-                   if (data.file === null)
-                       return <li key={data.name}>
-                           <h2>{data.name}</h2>
-                           <p>{data.comment}</p>
-                       </li>
-                   return <li key={data.name}>
-                       <h2>{data.name}</h2>
-                       <p>{data.comment}</p>
-                       <img src={data.file} alt={"picture"}/>
-                   </li>
-               })
-           }
-       </ul>
+            <ul>
+                {
+                    data.map(data => {
+                        if (data.file === null)
+                            return <li key={data.name}>
+                                <h2>{data.name}</h2>
+                                <p>{data.comment}</p>
+                            </li>
+                        return <li key={data.name}>
+                            <h2>{data.name}</h2>
+                            <p>{data.comment}</p>
+                            <img src={data.file} alt={"picture"}/>
+                        </li>
+                    })
+                }
+            </ul>
         </>
     )
-    }
+}
 
 
 export default Survey;
