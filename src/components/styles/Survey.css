@@ -1,0 +1,68 @@
+.frame_survey{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgb(100, 85, 110);
+    padding: 20px 10% 20px 50px;
+
+    margin: 8px 8px 8px 8px;
+}
+
+.table_survey{
+
+}
+
+.above_survey{
+    background-color: #2f2f2f;
+    margin: 8px 8px 8px 8px;
+    padding: 10px 20px 10px 20px;
+    outline: 0;
+}
+
+li{
+    color: white;
+    list-style-type: none;
+    box-sizing: inherit;
+    width: 75%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgb(100, 85, 110);
+    padding: 15px;
+    margin: 20px 10px 10px 10%;
+}
+
+.posting_file{
+    color: white;
+}
+
+.button_survey{
+    border: none;
+    border-radius: 15px;
+    outline: 0;
+    padding: 10px;
+    color: white;
+    background-color: rgb(63, 32, 121);
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 5px;
+    width: 10%;
+}
+
+.button_survey:hover {
+    background-color: rgb(81, 41, 155);
+}
+
+.img_survey{
+    display: block;
+    box-sizing: inherit;
+    border: 10px solid transparent;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 500px;
+    lenght: 500px;
+}
+
+@media screen and (max-width: 650px) {
+    .table_survey {
+        width: 100%;
+        display: block;
+    }
+}

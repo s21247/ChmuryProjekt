@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import emptyLocalStorage from "../hooks/emptyLocalStorage";
 import removeItemFromCart from "../hooks/removeItemFromCart";
+import '../styles/cart.css'
 
 const Cart = () => {
     const storage = JSON.parse(localStorage.getItem('cart'))
@@ -11,12 +12,12 @@ const Cart = () => {
     if(storage === null)
         return;
     return (
-        <div>
+        <div className={"cart"}>
             <h1>Your Cart:</h1>
             {storage.map((item) => {
                 return <ol key={item.id}>
                     <h2>{item.title}</h2>
-                    <p>
+                    <p className={"price_cart"}>
                         {item.price}zł
                     </p>
                 </ol>
@@ -27,9 +28,9 @@ const Cart = () => {
 
             {totalValue(storage) > 0 &&
                 <>
-                <h3>Total price: {totalValue(storage)}zł</h3>
-                <button  onClick={() =>removeItemFromCart()}>Reset cart</button>
-                <button onClick={() => emptyLocalStorage()}>Buy products</button>
+                <h3 className={"total_price_cart"}>Total price: {totalValue(storage)}zł</h3>
+                <button className={"button_cart"} onClick={() =>removeItemFromCart()}>Reset cart</button>
+                <button className={"button_cart"} onClick={() => emptyLocalStorage()}>Buy products</button>
                 </>
             }
 

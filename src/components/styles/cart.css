@@ -1,0 +1,30 @@
+.cart{
+    color: white;
+    margin-left: 10px;
+}
+.price_cart{
+    margin-left: 5px;
+    box-sizing: inherit;
+
+}
+.total_price_cart{
+    color: white;
+    margin: 0 5px 15px 5px;
+}
+.button_cart {
+    border: none;
+    outline: 0;
+    display: inline;
+    padding: 10px;
+    float: left;
+    margin-left: 10px;
+    color: white;
+    background-color: rgb(63, 32, 121);
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 5px;
+    width: 10%;
+}
+.button_cart:hover {
+    background-color: rgb(81, 41, 155);
+}

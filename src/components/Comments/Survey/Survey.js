@@ -3,6 +3,7 @@ import {auth, projectFirestore, projectStorage} from "../../../firebase-config/f
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
 import {onAuthStateChanged, signInAnonymously} from "@firebase/auth";
+import '../../styles/Survey.css'
 
 const Survey = () => {
     const [fileUrl, setFileUrl] = useState(null);
@@ -25,6 +26,7 @@ const Survey = () => {
                 "Content-Type": "application/json",
             },
             "body": `{\"fileName\":\"${file.name}\"}`
+
         })
             .then(response => response.json())
             .then(result => {
@@ -55,9 +57,7 @@ const Survey = () => {
         //console.log(token);
 
         signInAnonymously(auth)
-            .then(() => {
-                // Signed in..
-            })
+            .then(result => result.providerId)
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -70,15 +70,11 @@ const Survey = () => {
                 console.log(`USER ID: ${id}`)
                 console.log(user)
 
-
                 axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`)
                     .then(console.log)
 
-
                 if (isFileCheck) {
                     e.preventDefault()
-
-
                     const username = e.target.username.value;
                     const comment = e.target.comment.value;
 
@@ -106,12 +102,14 @@ const Survey = () => {
         fetchData()
     }, [])
     return (
-        <>
+        <div className={"table_survey"}>
             <form onSubmit={onSubmit}>
+                <div className={"frame_survey"}>
                 <input type="text" name="username" placeholder={"give name"} required={true}/>
                 <input type="text" name="comment" placeholder={"Write comment"} required={true}/>
-                <input type="file" onChange={onChange}/>
+                <input className={"posting_file"} type="file" onChange={onChange}/>
                 <button disabled={!isFileCheck}>Submit</button>
+                </div>
 
                 <ReCAPTCHA
                     sitekey={"6LfslDEeAAAAAPg-iDR9eCZJnyrDG43_EvFgaKXu"}
@@ -124,18 +122,22 @@ const Survey = () => {
                     data.map(data => {
                         if (data.file === null)
                             return <li key={data.id}>
+                                <div className={"above_survey"}>
                                 <h2>{data.name}</h2>
                                 <p>{data.comment}</p>
+                                </div>
                             </li>
                         return <li key={data.id}>
+                            <div className="above_survey">
                             <h2>{data.name}</h2>
                             <p>{data.comment}</p>
-                            <img src={data.file} alt={"picture"}/>
+                            </div>
+                            <img className={"img_survey"} src={data.file} alt={"picture"}/>
                         </li>
                     })
                 }
             </ul>
-        </>
+        </div>
     )
 }
 
