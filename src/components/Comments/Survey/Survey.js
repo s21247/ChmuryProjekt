@@ -112,7 +112,7 @@ const Survey = () => {
                 </div>
 
                 <ReCAPTCHA
-                    sitekey={"6LfslDEeAAAAAPg-iDR9eCZJnyrDG43_EvFgaKXu"}
+                    sitekey={process.env.REACT_APP_SECRET_KEY}
                     ref={reRef}
                     size={"invisible"}
                 />
