@@ -9,12 +9,12 @@ const Home = () => {
     return (
         <>
             <React.Fragment>
-                <ImageSlider/>,
+                <ImageSlider/>
                 <h1>Comments</h1>
                 <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SECRET_KEY}>
                     <RecaptchaComponent/>
                     <Survey/>
-                </GoogleReCaptchaProvider>,
+                </GoogleReCaptchaProvider>
             </React.Fragment>
         </>
 );

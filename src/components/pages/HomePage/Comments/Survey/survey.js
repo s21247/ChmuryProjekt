@@ -17,41 +17,7 @@ const Survey = () => {
         const file = e.target.files[0];
         const fileRef = ref(storage, file.name);
 
-        uploadBytes(fileRef, file).then((snapshot) => {
-            console.log('Uploaded a blob or file!');
-            getDownloadURL(snapshot.ref).then(async (downloadURL) => {
-                await setFileUrl(downloadURL);
-                setIsReadyToSend(true);
-            })
-        });
-    }
-
-    const onSubmit = (e) => {
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const uid = user.uid;
-                e.preventDefault();
-                const username = e.target.username.value;
-                const comment = e.target.comment.value;
-
-                await setDoc(doc(db, "tempComs", uid), {
-                    id: uid,
-                    name: username,
-                    comment: comment,
-                    file: fileUrl
-                });
-
-                signOut(auth).then(console.log);
-            }
-        })
-
-        //console.log(token);
-        // axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`).then(console.log)
-    }
-
-    useEffect(() => {
-        setData(docs);
-        signInAnonymously(auth)
+        await signInAnonymously(auth)
             .then(() => {
                 console.log("Sign In Anonymously")
             })
@@ -61,7 +27,42 @@ const Survey = () => {
                 console.log("Error Code: " + errorCode);
                 console.log("Error Message: " + errorMessage);
             });
-    }, [])
+
+        uploadBytes(fileRef, file).then((snapshot) => {
+            console.log('Uploaded a blob or file!');
+            getDownloadURL(snapshot.ref).then(async (downloadURL) => {
+                await setFileUrl(downloadURL);
+                setIsReadyToSend(true);
+            })
+        });
+    }
+
+    const onSubmit = async (e) => {
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const id = user.uid;
+                e.preventDefault();
+                const username = e.target.username.value;
+                const comment = e.target.comment.value;
+                await setDoc(doc(db, "tempComs", id), {
+                    id: id,
+                    name: username,
+                    comment: comment,
+                    file: fileUrl
+                });
+
+                signOut(auth).then();
+            }
+        })
+
+        //console.log(token);
+        // axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`).then(console.log)
+    }
+
+    useEffect(() => {
+        setData(docs);
+    }, [docs])
 
     return (
         <div className={"table_survey"}>
@@ -76,7 +77,7 @@ const Survey = () => {
             <ul>
                 {
                     data.map(data => {
-                        if (data.file === null)
+                        if (!data.file)
                             return <li key={data.id}>
                                 <div className={"above_survey"}>
                                 <h2>{data.name}</h2>
