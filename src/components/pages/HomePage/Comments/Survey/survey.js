@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import { db, storage } from "../../../../../firebase-config/firebase-config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import useFirestore from "../../../../Hooks/useFirestore";
 import ReCAPTCHA from "react-google-recaptcha";
 import '../../../../styles/survey.css'
@@ -13,6 +14,7 @@ const Survey = () => {
     const reRef = useRef(null)
     const { docs } = useFirestore('coms');
     const [isReadyToSend, setIsReadyToSend] = useState(false);
+    const auth = getAuth();
 
     const onChange = async (e) => {
         const file = e.target.files[0];
@@ -32,7 +34,30 @@ const Survey = () => {
     }
 
     const onSubmit = (e) => {
-        const auth = getAuth();
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const uid = user.uid;
+                e.preventDefault();
+                const username = e.target.username.value;
+                const comment = e.target.comment.value;
+
+                await setDoc(doc(db, "tempComs", uid), {
+                    id: uid,
+                    name: username,
+                    comment: comment,
+                    file: fileUrl
+                });
+
+                signOut(auth).then(console.log);
+            }
+        })
+
+        //console.log(token);
+        // axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`).then(console.log)
+    }
+
+    useEffect(() => {
+        setData(docs);
         signInAnonymously(auth)
             .then(() => {
                 console.log("Sign In Anonymously")
@@ -43,29 +68,7 @@ const Survey = () => {
                 console.log("Error Code: " + errorCode);
                 console.log("Error Message: " + errorMessage);
             });
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const uid = user.uid;
-                e.preventDefault();
-                const username = e.target.username.value;
-                const comment = e.target.comment.value;
-
-                await db.doc(`tempComs`).set({
-                    id: uid,
-                    name: username,
-                    comment: comment,
-                    file: fileUrl
-                })
-            }
-        })
-        signOut(auth).then(console.log);
-        //console.log(token);
-        // axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`).then(console.log)
-    }
-
-    useEffect(() => {
-        setData(docs);
-    }, [docs])
+    }, [])
 
     return (
         <div className={"table_survey"}>
