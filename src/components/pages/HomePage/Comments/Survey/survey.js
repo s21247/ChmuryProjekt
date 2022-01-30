@@ -3,14 +3,11 @@ import { db, storage } from "../../../../../firebase-config/firebase-config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "firebase/auth";
 import useFirestore from "../../../../Hooks/useFirestore";
-import ReCAPTCHA from "react-google-recaptcha";
 import '../../../../styles/survey.css'
 
 const Survey = () => {
     const [fileUrl, setFileUrl] = useState(null);
     const [data, setData] = useState([]);
-    const [token, setToken] = useState(null);
-    const reRef = useRef(null)
     const { docs } = useFirestore('coms');
     const [isReadyToSend, setIsReadyToSend] = useState(false);
 
@@ -25,10 +22,6 @@ const Survey = () => {
                 setIsReadyToSend(true);
             })
         });
-
-        // const value = await reRef.current.executeAsync();
-        // console.log(value);
-        // setToken(value)
     }
 
     const onSubmit = (e) => {
@@ -76,12 +69,6 @@ const Survey = () => {
                 <input className={"posting_file"} type="file" onChange={onChange} required={true}/>
                 <button disabled={!isReadyToSend}>Submit</button>
                 </div>
-
-                {/*<ReCAPTCHA*/}
-                {/*    sitekey={process.env.REACT_APP_SECRET_KEY}*/}
-                {/*    ref={reRef}*/}
-                {/*    size={"invisible"}*/}
-                {/*/>*/}
             </form>
             <ul>
                 {
