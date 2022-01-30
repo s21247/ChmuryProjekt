@@ -1,5 +1,5 @@
-import useFirestore from "../hooks/useFirestore";
-import pushToCart from "../hooks/pushToCart";
+import useFirestore from "../../../Hooks/useFirestore";
+import pushToCart from "../../../Hooks/pushToCart";
 
 function Template({collection, title}) {
     const {docs} = useFirestore(collection)

@@ -1,9 +1,9 @@
-import {projectFirestore} from "../../firebase-config/firebase-config";
+import { db } from "../../firebase-config/firebase-config";
 
 function emptyLocalStorage(){
     const arr = JSON.parse(localStorage.getItem('cart'));
     console.log(Object.assign({},arr));
-    projectFirestore
+    db
         .collection('cart')
         .add(Object.assign({},arr))
         .then(r => console.log(r))

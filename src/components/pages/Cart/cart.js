@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import emptyLocalStorage from "../hooks/emptyLocalStorage";
-import removeItemFromCart from "../hooks/removeItemFromCart";
-import '../styles/cart.css'
+import emptyLocalStorage from "../../Hooks/emptyLocalStorage";
+import removeItemFromCart from "../../Hooks/removeItemFromCart";
+import '../../styles/cart.css'
 
 const Cart = () => {
     const storage = JSON.parse(localStorage.getItem('cart'))

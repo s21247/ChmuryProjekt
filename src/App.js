@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
-import Home from './components/pages';
-import Menu from './components/pages/menu';
-import Cart from './components/pages/cart';
-import AboutUs from "./components/pages/aboutUs";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/pages/HomePage';
+import Menu from './components/pages/MenuPage/menu';
+import Cart from './components/pages/Cart/cart';
+import AboutUs from "./components/pages/AboutPage/aboutUs";
 import Navbar from "./components/Navbar";
-import ReCAPTCHA from "react-google-recaptcha";
+
 function App() {
     if(!localStorage.getItem('cart'))
     localStorage.setItem('cart',JSON.stringify([]))
