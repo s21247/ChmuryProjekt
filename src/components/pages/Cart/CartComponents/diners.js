@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import useFirestore from "../hooks/useFirestore";
+import useFirestore from "../../../Hooks/useFirestore";
 
 const Diners = (data) => {
     const [diners, setDiners] = useState([]);

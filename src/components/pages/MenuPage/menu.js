@@ -1,6 +1,6 @@
 import React from 'react';
-import MenuPage from "../Menu/MenuPage";
-import "../styles/menu.css";
+import MenuPage from "./Menu/MenuPage";
+import "../../styles/menu.css";
 
 const Menu = () => {
     return (

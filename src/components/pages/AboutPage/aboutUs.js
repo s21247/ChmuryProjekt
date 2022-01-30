@@ -1,6 +1,6 @@
 import React from 'react';
-import "../styles/aboutUs.css";
-import Card from "../Card/Card.js";
+import "../../styles/aboutUs.css";
+import Card from "./Card/Card.js";
 
 const AboutUs = () => {
     return (
