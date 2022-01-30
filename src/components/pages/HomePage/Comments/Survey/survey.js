@@ -3,15 +3,19 @@ import { db, storage } from "../../../../../firebase-config/firebase-config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import ReCAPTCHA from "react-google-recaptcha";
 import useFirestore from "../../../../Hooks/useFirestore";
 import '../../../../styles/survey.css'
+import axios from "axios";
 
 const Survey = () => {
     const [fileUrl, setFileUrl] = useState(null);
+    const [token,setToken] = useState('');
     const [data, setData] = useState([]);
     const { docs } = useFirestore('coms');
     const [isReadyToSend, setIsReadyToSend] = useState(false);
     const auth = getAuth();
+    const reRef = useRef(null)
 
     const onChange = async (e) => {
         const file = e.target.files[0];
@@ -24,6 +28,9 @@ const Survey = () => {
                 setIsReadyToSend(true);
             })
         });
+        const value = await reRef.current.executeAsync();
+        console.log(value)
+        setToken(value)
     }
 
     const onSubmit = (e) => {
@@ -45,8 +52,11 @@ const Survey = () => {
             }
         })
 
-        //console.log(token);
-        // axios.get(`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`).then(console.log)
+        let score;
+         axios.get
+         (`https://us-central1-model-aria-333216.3.net/sendRecaptcha?token=${token}`)
+            .then(response => score = response.data)
+        console.log(score)
     }
 
     useEffect(() => {
@@ -61,7 +71,7 @@ const Survey = () => {
                 console.log("Error Code: " + errorCode);
                 console.log("Error Message: " + errorMessage);
             });
-    }, [])
+    }, [docs])
 
     return (
         <div className={"table_survey"}>
@@ -72,6 +82,12 @@ const Survey = () => {
                 <input className={"posting_file"} type="file" onChange={onChange} required={true}/>
                 <button disabled={!isReadyToSend}>Submit</button>
                 </div>
+
+                <ReCAPTCHA
+                    sitekey={process.env.REACT_APP_SECRET_KEY}
+                    ref={reRef}
+                    size={"invisible"}
+                />
             </form>
             <ul>
                 {
