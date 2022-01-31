@@ -7,9 +7,9 @@ const Home = () => {
     return (
         <>
             <React.Fragment>
-            <ImageSlider/>,
+                <ImageSlider/>
                 <h1>Comments</h1>
-            <Survey/>
+                <Survey/>
             </React.Fragment>
         </>
     );
