@@ -2,7 +2,7 @@ body {
     background-color: #4e598c;
 }
 
-.slider {
+.imageDiv {
     position: relative;
     height: 100vh;
     display: flex;
@@ -15,15 +15,4 @@ body {
     height: 600px;
     border-radius: 10px;
 
-}
-
-.slide {
-    opacity: 0;
-    transition-duration: 1s;
-}
-
-.slide.active {
-    opacity: 1;
-    transition-duration: 1s;
-    transform: scale(1.08);
 }
