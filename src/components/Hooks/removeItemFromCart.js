@@ -2,7 +2,7 @@
 
 function removeItemFromCart(){
     localStorage.removeItem('cart');
-    window.location.reload(true);
+    window.location.reload();
 }
 
 export default removeItemFromCart;

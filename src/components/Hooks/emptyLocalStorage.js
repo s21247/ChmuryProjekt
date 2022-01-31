@@ -1,12 +1,11 @@
 import { db } from "../../firebase-config/firebase-config";
+import {collection, addDoc} from "firebase/firestore";
 
-function emptyLocalStorage(){
+async function emptyLocalStorage() {
     const arr = JSON.parse(localStorage.getItem('cart'));
-    console.log(Object.assign({},arr));
-    db
-        .collection('cart')
-        .add(Object.assign({},arr))
-        .then(r => console.log(r))
+
+    await addDoc(collection(db,'cart'), Object.assign({}, arr));
+
     localStorage.clear()
 }
 
