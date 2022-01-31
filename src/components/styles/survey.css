@@ -11,9 +11,10 @@
 }
 
 .above_survey{
-    background-color: #204060;
+    background-color: #2c4767;
     margin: 8px 8px 8px 8px;
     padding: 10px 20px 10px 20px;
+    box-shadow: 1px 3px 7px 3px rgba(0, 0, 0, 0.3);
     outline: 0;
 }
 
@@ -22,7 +23,7 @@ li{
     list-style-type: none;
     box-sizing: inherit;
     width: 75%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 5px 10px 2px rgba(0, 0, 0, 0.3);
     background-color: #204060;
     padding: 15px;
     margin: 20px 10px 10px 10%;
@@ -52,17 +53,26 @@ li{
 .img_survey{
     display: block;
     box-sizing: inherit;
-    border: 10px solid transparent;
+
     margin-left: auto;
     margin-right: auto;
-    width: 500px;
-    height: 300px;
-    border-radius: 10px;
+    width: 50%;
+    height: auto;
+    border-radius: 20px;
+}
+
+.img_survey:hover{
+    transform: scale(1.5);
+    opacity: 0.9;
+    box-shadow: 5px 6px 15px 5px rgba(0, 0, 0, 0.5);
+    border: 5px solid;
+    border-color: #2c4767;
+    object-fit: cover;
 }
 
 @media screen and (max-width: 650px) {
     .img_survey {
-        width: 100%;
+        width: 60%;
         display: block;
     }
 }

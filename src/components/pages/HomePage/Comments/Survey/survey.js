@@ -99,16 +99,18 @@ const Survey = () => {
                         if (!data.file)
                             return <li key={data.id}>
                                 <div className={"above_survey"}>
+                                    <h4>User comment:</h4>
                                     <h2>{data.name}</h2>
                                     <p>{data.comment}</p>
                                 </div>
                             </li>
                         return <li key={data.id}>
                             <div className="above_survey">
-                                <h2>{data.name}</h2>
+                                <h4>User comment:</h4>
+                                <h2> {data.name}</h2>
                                 <p>{data.comment}</p>
                             </div>
-                            <img className={"img_survey"} src={data.file} alt={"picture"}/>
+                            <img className="img_survey" src={data.file} alt={"picture"}/>
                         </li>
                     })
                 }
