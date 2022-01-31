@@ -78,13 +78,13 @@ const Survey = () => {
 
 
     return (
-        <div className={"table_survey"}>
+        <div className="table_survey">
             <form onSubmit={onSubmit}>
                 <div className={"frame_survey"}>
-                    <input type="text" name="username" placeholder={"give name"} required={true}/>
-                    <input type="text" name="comment" placeholder={"Write comment"} required={true}/>
-                    <input className={"posting_file"} type="file" onChange={onChange} required={true}/>
-                    <button disabled={!isReadyToSend}>Submit</button>
+                    <input className="bar_survey_name" type="text" name="username" placeholder={"Enter username"} required={true}/>
+                    <input className="bar_survey_comment" type="text" name="comment" placeholder={"Write your comment"} required={true}/>
+                    <input className="button_survey" type="file" onChange={onChange} required={true}/>
+                    <button className="posting_file_submit" disabled={!isReadyToSend}>Submit</button>
                 </div>
 
                 <ReCAPTCHA
@@ -98,17 +98,15 @@ const Survey = () => {
                     data.map(data => {
                         if (!data.file)
                             return <li key={data.id}>
-                                <div className={"above_survey"}>
-                                    <h4>User comment:</h4>
-                                    <h2>{data.name}</h2>
-                                    <p>{data.comment}</p>
+                                <div className="above_survey">
+                                    <h2>User:{data.name}</h2>
+                                    <p>Comment:{data.comment}</p>
                                 </div>
                             </li>
                         return <li key={data.id}>
                             <div className="above_survey">
-                                <h4>User comment:</h4>
-                                <h2> {data.name}</h2>
-                                <p>{data.comment}</p>
+                                <h2>User: {data.name}</h2>
+                                <p>Comment: {data.comment}</p>
                             </div>
                             <img className="img_survey" src={data.file} alt={"picture"}/>
                         </li>

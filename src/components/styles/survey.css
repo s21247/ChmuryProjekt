@@ -7,7 +7,36 @@
 }
 
 .table_survey{
+    box-sizing: border-box;
+}
 
+.bar_survey_name{
+    border: none;
+    border-bottom: 3px solid #8cb3d9;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    height: 30px;
+    width: 15%;
+    clear: both;
+    display: table;
+}
+
+.bar_survey_comment{
+    border: none;
+    border-bottom: 3px solid #8cb3d9;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    height: 50px;
+    width: 45%;
+    clear: both;
+    display: inline;
+    white-space: nowrap;
+    font-size: 18px;
+}
+
+.comments_survey{
+    margin-left: 15px;
 }
 
 .above_survey{
@@ -29,21 +58,35 @@ li{
     margin: 20px 10px 10px 10%;
 }
 
-.posting_file{
+.posting_file_submit{
     color: white;
+    border-radius: 5px;
+    float: right;
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 10px;
+    background-color: #9fafdf;
+    cursor: pointer;
+    padding: 14px 40px;
 }
 
 .button_survey{
     border: none;
-    border-radius: 15px;
+    border-radius: 5px;
     outline: 0;
-    padding: 10px;
     color: white;
-    background-color: 	#9fafdf;
-    text-align: center;
+    text-align: left;
     cursor: pointer;
-    margin-bottom: 5px;
-    width: 10%;
+    background-color: #9fafdf;
+    float: inherit;
+    display: inline-block;
+    -webkit-user-select: none;
+    margin-left: 15px;
+    padding: 14px 5px;
+}
+
+.button_survey::-webkit-file-upload-button {
+    visibility: hidden;
 }
 
 .button_survey:hover {
@@ -53,7 +96,6 @@ li{
 .img_survey{
     display: block;
     box-sizing: inherit;
-
     margin-left: auto;
     margin-right: auto;
     width: 50%;
@@ -65,8 +107,7 @@ li{
     transform: scale(1.5);
     opacity: 0.9;
     box-shadow: 5px 6px 15px 5px rgba(0, 0, 0, 0.5);
-    border: 5px solid;
-    border-color: #2c4767;
+    border: 5px solid #2c4767;
     object-fit: cover;
 }
 
