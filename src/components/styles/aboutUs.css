@@ -24,7 +24,7 @@
     font-family: Arial, Helvetica, sans-serif;
     padding: 25px;
     text-align: center;
-    background-color: #615A75;
+    background-color: #263973;
     color: white;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .button:hover {
-    background-color: rgb(81, 41, 155);
+    background-color: #8cb3d9;
 }
 
 @media screen and (max-width: 650px) {

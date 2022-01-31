@@ -34,9 +34,22 @@ const Cart = () => {
                 </>
             }
 
+
         </div>
     );
 
 };
 
 export default Cart;
+
+// <GoogleLogin clientId={cliientId} = {
+//     render={renderProps => (
+//     <button onClick={renderProps.onClick} disabled={renderProps.disabled}>
+//     Test
+//     </button>
+//     )}
+//     buttonTest="login"
+//     onSuccess={responseGoogle}
+//     onFailure={responseGoogle}
+//     cookiePolicy={'single_host_origin'}
+//     />

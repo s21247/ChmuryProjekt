@@ -19,12 +19,12 @@
     float: left;
     margin-left: 10px;
     color: white;
-    background-color: rgb(63, 32, 121);
+    background-color: #9fafdf;
     text-align: center;
     cursor: pointer;
     margin-bottom: 5px;
     width: 10%;
 }
 .button_cart:hover {
-    background-color: rgb(81, 41, 155);
+    background-color: #8cb3d9;
 }

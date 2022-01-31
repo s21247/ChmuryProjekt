@@ -6,6 +6,7 @@ import Cart from './components/pages/Cart/cart';
 import AboutUs from "./components/pages/AboutPage/aboutUs";
 import Navbar from "./components/Navbar";
 
+
 function App() {
     if(!localStorage.getItem('cart'))
     localStorage.setItem('cart',JSON.stringify([]))

@@ -1,6 +1,6 @@
 .frame_survey{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: rgb(100, 85, 110);
+    background-color: #204060;
     padding: 20px 10% 20px 50px;
 
     margin: 8px 8px 8px 8px;
@@ -11,7 +11,7 @@
 }
 
 .above_survey{
-    background-color: #2f2f2f;
+    background-color: #204060;
     margin: 8px 8px 8px 8px;
     padding: 10px 20px 10px 20px;
     outline: 0;
@@ -23,7 +23,7 @@ li{
     box-sizing: inherit;
     width: 75%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: rgb(100, 85, 110);
+    background-color: #204060;
     padding: 15px;
     margin: 20px 10px 10px 10%;
 }
@@ -38,7 +38,7 @@ li{
     outline: 0;
     padding: 10px;
     color: white;
-    background-color: rgb(63, 32, 121);
+    background-color: 	#9fafdf;
     text-align: center;
     cursor: pointer;
     margin-bottom: 5px;
@@ -46,7 +46,7 @@ li{
 }
 
 .button_survey:hover {
-    background-color: rgb(81, 41, 155);
+    background-color: #b3bfe6;
 }
 
 .img_survey{
@@ -55,13 +55,13 @@ li{
     border: 10px solid transparent;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
-    height: 500px;
-    lenght: 500px;
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
 }
 
 @media screen and (max-width: 650px) {
-    .table_survey {
+    .img_survey {
         width: 100%;
         display: block;
     }

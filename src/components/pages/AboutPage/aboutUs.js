@@ -23,7 +23,7 @@ const AboutUs = () => {
                     </p>
                 </div>
 
-                <div className="title"><h2 style={{color:"#D3B9F0"}}>Our Restaurant detailed information</h2></div>
+                <div className="title"><h2 style={{color:"#204060"}}>Our Restaurant detailed information</h2></div>
                 <div className="row">
                     <div className="column">
                         <Card imageSource={"https://image.freepik.com/darmowe-zdjecie/restauracja-w-stoly-i-krzesla-na-zewnatrz_1127-2018.jpg"}
