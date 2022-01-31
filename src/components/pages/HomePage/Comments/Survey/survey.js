@@ -32,15 +32,19 @@ const Survey = () => {
                 console.log("Error Message: " + errorMessage);
             });
 
-        uploadBytes(fileRef, file).then((snapshot) => {
-            console.log('Uploaded a blob or file!');
-            getDownloadURL(snapshot.ref).then(async (downloadURL) => {
-                await setFileUrl(downloadURL);
-                setIsReadyToSend(true);
-            })
-        });
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                uploadBytes(fileRef, file).then((snapshot) => {
+                    console.log('Uploaded a blob or file!');
+                    getDownloadURL(snapshot.ref).then(async (downloadURL) => {
+                        await setFileUrl(downloadURL);
+                        setIsReadyToSend(true);
+                    })
+                }).catch(console.log);
+            }
+        })
+
         const value = await reRef.current.executeAsync();
-        console.log(value)
         setToken(value)
     }
 
