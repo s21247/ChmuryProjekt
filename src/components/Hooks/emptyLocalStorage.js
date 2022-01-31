@@ -28,7 +28,9 @@ async function emptyLocalStorage() {
 
 
 
-    localStorage.clear()
+    localStorage.clear();
+    alert("We received your order");
+    window.location.reload();
 }
 
 
